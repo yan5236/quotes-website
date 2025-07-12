@@ -1,0 +1,349 @@
+/* 响应式设计 */
+
+/* 平板设备 */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .quotes-container {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .hero h2 {
+        font-size: 2.2rem;
+    }
+    
+    .nav {
+        gap: 0.5rem;
+    }
+    
+    .nav-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* 手机设备 */
+@media (max-width: 768px) {
+    .header .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .logo {
+        font-size: 1.8rem;
+    }
+    
+    .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .nav-btn {
+        flex: 1;
+        min-width: 80px;
+        text-align: center;
+    }
+    
+    .hero h2 {
+        font-size: 1.8rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .search-bar {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    #search-btn {
+        padding: 0.75rem 1.5rem;
+    }
+    
+    .filter-bar {
+        gap: 0.5rem;
+    }
+    
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .quotes-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .quote-card {
+        padding: 1.5rem;
+    }
+    
+    .quote-text {
+        font-size: 1rem;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .pagination button {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .add-form-container {
+        margin: 0 10px;
+        padding: 1.5rem;
+    }
+    
+    .add-form-container h2 {
+        font-size: 1.5rem;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 0.75rem;
+    }
+    
+    .api-container {
+        margin: 0 10px;
+    }
+    
+    .api-section {
+        padding: 1.5rem;
+    }
+    
+    .api-test-btn {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+    
+    #category-select,
+    #search-keyword {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+}
+
+/* 小屏手机 */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .main {
+        padding: 1rem 0;
+    }
+    
+    .hero {
+        margin-bottom: 2rem;
+    }
+    
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+    
+    .hero p {
+        font-size: 0.9rem;
+    }
+    
+    .search-bar {
+        margin-bottom: 1.5rem;
+    }
+    
+    .filter-bar {
+        margin-bottom: 1.5rem;
+    }
+    
+    .filter-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .quote-card {
+        padding: 1rem;
+    }
+    
+    .quote-text {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    .quote-text::before {
+        font-size: 2rem;
+        top: -5px;
+        left: -10px;
+    }
+    
+    .tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.6rem;
+    }
+    
+    .add-form-container {
+        margin: 0 5px;
+        padding: 1rem;
+    }
+    
+    .add-form-container h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+    
+    .submit-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .api-container {
+        margin: 0 5px;
+    }
+    
+    .api-container h2 {
+        font-size: 1.5rem;
+    }
+    
+    .api-section {
+        padding: 1rem;
+    }
+    
+    .api-section h3 {
+        font-size: 1.1rem;
+    }
+    
+    .api-endpoint {
+        padding: 0.75rem;
+        font-size: 0.8rem;
+        word-break: break-all;
+    }
+    
+    .api-result {
+        padding: 0.75rem;
+        font-size: 0.8rem;
+        max-height: 200px;
+    }
+}
+
+/* 横屏手机 */
+@media (max-width: 768px) and (orientation: landscape) {
+    .header .container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .nav {
+        flex-wrap: nowrap;
+        gap: 0.5rem;
+    }
+    
+    .hero h2 {
+        font-size: 1.6rem;
+    }
+    
+    .quotes-container {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+/* 大屏设备优化 */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1400px;
+    }
+    
+    .quotes-container {
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 2.5rem;
+    }
+    
+    .hero h2 {
+        font-size: 3rem;
+    }
+    
+    .hero p {
+        font-size: 1.3rem;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+    .nav-btn,
+    .filter-btn,
+    .submit-btn,
+    .api-test-btn,
+    #search-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .quote-card:hover {
+        transform: none;
+    }
+    
+    .quote-card:active {
+        transform: scale(0.98);
+    }
+}
+
+/* 深色模式媒体查询准备 */
+@media (prefers-color-scheme: dark) {
+    /* 暂时保留浅色主题，后续可扩展深色模式 */
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .quote-card:hover {
+        transform: none;
+    }
+    
+    .nav-btn:hover,
+    .filter-btn:hover,
+    .submit-btn:hover,
+    .api-test-btn:hover,
+    #search-btn:hover {
+        transform: none;
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    :root {
+        --shadow: rgba(0, 0, 0, 0.3);
+        --shadow-hover: rgba(0, 0, 0, 0.4);
+    }
+    
+    .quote-card,
+    .add-form-container,
+    .api-section {
+        border: 2px solid var(--medium-gray);
+    }
+    
+    .nav-btn,
+    .filter-btn {
+        border-width: 3px;
+    }
+}

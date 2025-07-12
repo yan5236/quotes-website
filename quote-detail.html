@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>名言详情 - 名言名句</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/detail.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo"><a href="index.html">名言名句</a></h1>
+            <nav class="nav">
+                <button class="nav-btn" onclick="window.history.back()">← 返回</button>
+                <button class="nav-btn" onclick="window.location.href='index.html'">首页</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <p>正在加载名言详情...</p>
+            </div>
+
+            <div class="quote-detail-container" id="quote-detail" style="display: none;">
+                <div class="quote-main">
+                    <div class="quote-content">
+                        <blockquote class="quote-text" id="quote-text">
+                            <!-- 名言内容将在这里显示 -->
+                        </blockquote>
+                        
+                        <div class="quote-meta">
+                            <div class="quote-author">
+                                <span class="label">作者：</span>
+                                <span class="value" id="quote-author">未知</span>
+                            </div>
+                            <div class="quote-source">
+                                <span class="label">出处：</span>
+                                <span class="value" id="quote-source">未知</span>
+                            </div>
+                            <div class="quote-category">
+                                <span class="label">分类：</span>
+                                <span class="category-tag" id="quote-category">未分类</span>
+                            </div>
+                            <div class="quote-tags">
+                                <span class="label">标签：</span>
+                                <div class="tags-container" id="quote-tags">
+                                    <!-- 标签将在这里显示 -->
+                                </div>
+                            </div>
+                            <div class="quote-date">
+                                <span class="label">创建时间：</span>
+                                <span class="value" id="quote-date">未知</span>
+                            </div>
+                        </div>
+
+                        <div class="quote-actions">
+                            <button class="action-btn share-btn" onclick="shareQuote()">
+                                <span class="icon">🔗</span>
+                                分享名言
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comments-section">
+                    <h3 class="comments-title">
+                        <span class="icon">💬</span>
+                        评论区
+                    </h3>
+                    
+                    <!-- LZReview评论系统容器 -->
+                    <div id="lzreview-comments"></div>
+                </div>
+            </div>
+
+            <div class="error-message" id="error-message" style="display: none;">
+                <h2>找不到该名言</h2>
+                <p>抱歉，您请求的名言不存在或已被删除。</p>
+                <button class="btn" onclick="window.location.href='index.html'">返回首页</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p>&copy; 2024 名言名句. 发现智慧，分享感悟。</p>
+                </div>
+                <div class="footer-links">
+                    <h4>我的其他项目</h4>
+                    <div class="links-grid">
+                        <a href="https://lzmusic.nanhaiblog.top/" target="_blank" class="link-item">
+                            <span class="link-icon">🎵</span>
+                            <div class="link-content">
+                                <div class="link-title">LZ Music</div>
+                                <div class="link-desc">基于B站API的音乐播放器</div>
+                            </div>
+                        </a>
+                        <a href="https://lztools.nanhaiblog.top/" target="_blank" class="link-item">
+                            <span class="link-icon">🛠️</span>
+                            <div class="link-content">
+                                <div class="link-title">LZ小工具</div>
+                                <div class="link-desc">免费在线开发工具集合</div>
+                            </div>
+                        </a>
+                        <a href="https://lzreviewdocs.nanhaiblog.top/" target="_blank" class="link-item">
+                            <span class="link-icon">💬</span>
+                            <div class="link-content">
+                                <div class="link-title">LZReview</div>
+                                <div class="link-desc">轻量级静态网站评论系统</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 分享弹窗 -->
+    <div class="modal" id="share-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>分享名言</h3>
+                <button class="close-btn" onclick="closeShareModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="share-options">
+                    <button class="share-option" onclick="copyToClipboard()">
+                        <span class="icon">📋</span>
+                        复制链接
+                    </button>
+                    <button class="share-option" onclick="shareToWeibo()">
+                        <span class="icon">🐦</span>
+                        微博分享
+                    </button>
+                    <button class="share-option" onclick="shareToQQ()">
+                        <span class="icon">🐧</span>
+                        QQ空间
+                    </button>
+                </div>
+                <div class="share-text">
+                    <label for="share-content">分享内容：</label>
+                    <textarea id="share-content" rows="4" readonly></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LZReview评论系统配置 -->
+    <script>
+        window.lzreviewConfig = {
+            apiUrl: 'https://lzreview.nanhaiblog.top',
+            pageUrl: window.location.href,
+            placeholder: '分享您对这句名言的感悟...',
+            maxLength: 1000,
+            requireName: true,
+            requireEmail: false
+        };
+    </script>
+    
+    <!-- 引入LZReview评论系统 -->
+    <script src="https://lzreview.nanhaiblog.top/embed.js"></script>
+    
+    <script src="js/quotes.js"></script>
+    <script src="js/quote-detail.js"></script>
+</body>
+</html>

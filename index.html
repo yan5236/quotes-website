@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>名言名句 - 游戏·影视·动漫·名人语录</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">名言名句</h1>
+            <nav class="nav">
+                <button class="nav-btn active" data-tab="home">首页</button>
+                <button class="nav-btn" data-tab="api">API</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- 首页内容 -->
+            <section id="home" class="tab-content active">
+                <div class="hero">
+                    <h2>发现智慧的力量</h2>
+                    <p>收录游戏、影视、动漫及名人的经典语录</p>
+                </div>
+
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="搜索名言、作者或来源...">
+                    <button id="search-btn">搜索</button>
+                </div>
+
+                <div class="filter-bar">
+                    <button class="filter-btn active" data-category="all">全部</button>
+                    <button class="filter-btn" data-category="game">游戏</button>
+                    <button class="filter-btn" data-category="movie">影视</button>
+                    <button class="filter-btn" data-category="anime">动漫</button>
+                    <button class="filter-btn" data-category="celebrity">名人</button>
+                </div>
+
+                <div class="quotes-container" id="quotes-container">
+                    <!-- 名言卡片将在这里动态生成 -->
+                </div>
+
+                <div class="pagination">
+                    <button id="prev-btn" disabled>上一页</button>
+                    <span id="page-info">第 1 页，共 1 页</span>
+                    <button id="next-btn">下一页</button>
+                </div>
+            </section>
+
+
+            <!-- API页面 -->
+            <section id="api" class="tab-content">
+                <div class="api-container">
+                    <h2>API 接口文档</h2>
+                    <div class="api-intro">
+                        <p>名言名句API提供完整的RESTful接口，支持获取、搜索和管理名言数据。</p>
+                        <div class="api-base-url">
+                            <strong>基础URL：</strong> <code>http://localhost:3000</code>
+                        </div>
+                    </div>
+
+                    <!-- 随机名言API -->
+                    <div class="api-section">
+                        <h3>📚 随机获取名言</h3>
+                        <div class="api-endpoint">
+                            <span class="method">GET</span>
+                            <code>/api/quotes/random</code>
+                        </div>
+                        
+                        <div class="api-description">
+                            获取一条或多条随机名言，支持指定返回数量。
+                        </div>
+
+                        <div class="api-params">
+                            <h4>查询参数：</h4>
+                            <table class="params-table">
+                                <tr>
+                                    <th>参数名</th>
+                                    <th>类型</th>
+                                    <th>必填</th>
+                                    <th>默认值</th>
+                                    <th>说明</th>
+                                </tr>
+                                <tr>
+                                    <td><code>count</code></td>
+                                    <td>number</td>
+                                    <td>否</td>
+                                    <td>1</td>
+                                    <td>返回的名言数量，最大10条</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="api-examples">
+                            <h4>调用示例：</h4>
+                            <div class="example-item">
+                                <div class="example-title">获取单条随机名言：</div>
+                                <div class="example-code">
+                                    <code>GET /api/quotes/random</code>
+                                </div>
+                            </div>
+                            <div class="example-item">
+                                <div class="example-title">获取5条随机名言：</div>
+                                <div class="example-code">
+                                    <code>GET /api/quotes/random?count=5</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="api-test">
+                            <label>数量：</label>
+                            <input type="number" id="random-count" min="1" max="10" value="1" style="width: 80px;">
+                            <button class="api-test-btn" onclick="testRandomQuote()">测试接口</button>
+                        </div>
+                        <div id="random-result" class="api-result"></div>
+                    </div>
+
+                    <!-- 分类名言API -->
+                    <div class="api-section">
+                        <h3>🎮 按分类获取名言</h3>
+                        <div class="api-endpoint">
+                            <span class="method">GET</span>
+                            <code>/api/quotes/category/{category}</code>
+                        </div>
+                        
+                        <div class="api-description">
+                            根据分类获取名言列表。
+                        </div>
+
+                        <div class="api-params">
+                            <h4>路径参数：</h4>
+                            <table class="params-table">
+                                <tr>
+                                    <th>参数名</th>
+                                    <th>类型</th>
+                                    <th>必填</th>
+                                    <th>可选值</th>
+                                    <th>说明</th>
+                                </tr>
+                                <tr>
+                                    <td><code>category</code></td>
+                                    <td>string</td>
+                                    <td>是</td>
+                                    <td>game, movie, anime, celebrity, all</td>
+                                    <td>名言分类</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="api-examples">
+                            <h4>调用示例：</h4>
+                            <div class="example-item">
+                                <div class="example-title">获取游戏类名言：</div>
+                                <div class="example-code">
+                                    <code>GET /api/quotes/category/game</code>
+                                </div>
+                            </div>
+                            <div class="example-item">
+                                <div class="example-title">获取所有名言：</div>
+                                <div class="example-code">
+                                    <code>GET /api/quotes/category/all</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="api-test">
+                            <select id="category-select">
+                                <option value="all">全部</option>
+                                <option value="game">游戏</option>
+                                <option value="movie">影视</option>
+                                <option value="anime">动漫</option>
+                                <option value="celebrity">名人</option>
+                            </select>
+                            <button class="api-test-btn" onclick="testCategoryQuotes()">测试接口</button>
+                        </div>
+                        <div id="category-result" class="api-result"></div>
+                    </div>
+
+                    <!-- 搜索API -->
+                    <div class="api-section">
+                        <h3>🔍 搜索名言</h3>
+                        <div class="api-endpoint">
+                            <span class="method">GET</span>
+                            <code>/api/quotes/search</code>
+                        </div>
+                        
+                        <div class="api-description">
+                            根据关键词搜索名言，支持搜索内容、作者、来源和标签。
+                        </div>
+
+                        <div class="api-params">
+                            <h4>查询参数：</h4>
+                            <table class="params-table">
+                                <tr>
+                                    <th>参数名</th>
+                                    <th>类型</th>
+                                    <th>必填</th>
+                                    <th>说明</th>
+                                </tr>
+                                <tr>
+                                    <td><code>q</code></td>
+                                    <td>string</td>
+                                    <td>是</td>
+                                    <td>搜索关键词</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="api-examples">
+                            <h4>调用示例：</h4>
+                            <div class="example-item">
+                                <div class="example-title">搜索包含"勇气"的名言：</div>
+                                <div class="example-code">
+                                    <code>GET /api/quotes/search?q=勇气</code>
+                                </div>
+                            </div>
+                            <div class="example-item">
+                                <div class="example-title">搜索作者"鸣人"：</div>
+                                <div class="example-code">
+                                    <code>GET /api/quotes/search?q=鸣人</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="api-test">
+                            <input type="text" id="search-keyword" placeholder="输入搜索关键词" value="勇气">
+                            <button class="api-test-btn" onclick="testSearchQuotes()">测试接口</button>
+                        </div>
+                        <div id="search-result" class="api-result"></div>
+                    </div>
+
+                    <!-- 统计API -->
+                    <div class="api-section">
+                        <h3>📊 获取统计信息</h3>
+                        <div class="api-endpoint">
+                            <span class="method">GET</span>
+                            <code>/api/quotes/stats</code>
+                        </div>
+                        
+                        <div class="api-description">
+                            获取名言数据库的统计信息，包括各分类的数量。
+                        </div>
+
+                        <div class="api-examples">
+                            <h4>调用示例：</h4>
+                            <div class="example-item">
+                                <div class="example-code">
+                                    <code>GET /api/quotes/stats</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="api-test">
+                            <button class="api-test-btn" onclick="testStatsAPI()">测试接口</button>
+                        </div>
+                        <div id="stats-result" class="api-result"></div>
+                    </div>
+
+                    <!-- 响应格式说明 -->
+                    <div class="api-section">
+                        <h3>📋 响应格式</h3>
+                        <div class="api-description">
+                            所有API接口都返回JSON格式的数据，基本结构如下：
+                        </div>
+                        
+                        <div class="response-example">
+                            <h4>成功响应：</h4>
+                            <pre><code>{
+  "success": true,
+  "data": { ... },
+  "message": "操作成功信息"
+}</code></pre>
+                        </div>
+
+                        <div class="response-example">
+                            <h4>错误响应：</h4>
+                            <pre><code>{
+  "success": false,
+  "error": "错误详情",
+  "message": "错误信息"
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- cURL示例 -->
+                    <div class="api-section">
+                        <h3>💻 cURL 调用示例</h3>
+                        <div class="curl-examples">
+                            <div class="curl-item">
+                                <h4>获取随机名言：</h4>
+                                <div class="curl-code">
+                                    <code>curl -X GET "http://localhost:3000/api/quotes/random"</code>
+                                </div>
+                            </div>
+                            <div class="curl-item">
+                                <h4>获取多条随机名言：</h4>
+                                <div class="curl-code">
+                                    <code>curl -X GET "http://localhost:3000/api/quotes/random?count=3"</code>
+                                </div>
+                            </div>
+                            <div class="curl-item">
+                                <h4>搜索名言：</h4>
+                                <div class="curl-code">
+                                    <code>curl -X GET "http://localhost:3000/api/quotes/search?q=勇气"</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p>&copy; 2024 名言名句. 发现智慧，分享感悟。</p>
+                </div>
+                <div class="footer-links">
+                    <h4>我的其他项目</h4>
+                    <div class="links-grid">
+                        <a href="https://lzmusic.nanhaiblog.top/" target="_blank" class="link-item">
+                            <span class="link-icon">🎵</span>
+                            <div class="link-content">
+                                <div class="link-title">LZ Music</div>
+                                <div class="link-desc">基于B站API的音乐播放器</div>
+                            </div>
+                        </a>
+                        <a href="https://lztools.nanhaiblog.top/" target="_blank" class="link-item">
+                            <span class="link-icon">🛠️</span>
+                            <div class="link-content">
+                                <div class="link-title">LZ小工具</div>
+                                <div class="link-desc">免费在线开发工具集合</div>
+                            </div>
+                        </a>
+                        <a href="https://lzreviewdocs.nanhaiblog.top/" target="_blank" class="link-item">
+                            <span class="link-icon">💬</span>
+                            <div class="link-content">
+                                <div class="link-title">LZReview</div>
+                                <div class="link-desc">轻量级静态网站评论系统</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/quotes.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
